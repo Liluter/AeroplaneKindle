@@ -1,0 +1,36 @@
+{"frames": {
+
+"aircraft-kindle-000":
+{
+	"frame": {"x":0,"y":0,"w":1279,"h":906},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":1279,"h":906},
+	"sourceSize": {"w":1279,"h":906}
+},
+"aircraft-kindle-Xray":
+{
+	"frame": {"x":0,"y":906,"w":773,"h":364},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":102,"y":198,"w":773,"h":364},
+	"sourceSize": {"w":1279,"h":906}
+},
+"ClassicScope":
+{
+	"frame": {"x":773,"y":906,"w":249,"h":249},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":249,"h":249},
+	"sourceSize": {"w":249,"h":249}
+}},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.1",
+	"image": "ScaledSpritesheetdata.png",
+	"format": "RGBA8888",
+	"size": {"w":1279,"h":1270},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:843702671dffff39b1a11721845c1f05:98ca75de173282e1c63930d63395685a:acb06f41c5391e096cf9f6974b8cf5aa$"
+}
+}
