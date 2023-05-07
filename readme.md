@@ -27,3 +27,6 @@
 - Gimp https://www.gimp.org
 - Pixi.js https://pixijs.com repo (https://github.com/pixijs/pixijs)
 - TexturePacker https://www.codeandweb.com/texturepacker (7 days pro trial)
+  
+### Info 
+works only on desktop
