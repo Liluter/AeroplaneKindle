@@ -29,4 +29,9 @@
 - TexturePacker https://www.codeandweb.com/texturepacker (7 days pro trial)
   
 ### Info 
-works only on desktop
+- works only on desktop
+
+---
+
+
+## Live preview  https://harmonious-sunshine-33769b.netlify.app
