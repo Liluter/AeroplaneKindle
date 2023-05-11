@@ -1,6 +1,9 @@
-let Xposition;
-let Yposition;
-document.addEventListener('mousemove', (e)=> {
+let Xposition = 0;
+let Yposition = 0;
+
+
+
+document.addEventListener('pointermove', (e)=> {
   Xposition= e.clientX;
   Yposition= e.clientY;
 })
