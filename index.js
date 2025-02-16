@@ -13,7 +13,9 @@ let windowHeight = windowWidth * 0.70836591; // preserve aspect ratio of texture
 
 // Create the application helper and add its render target to the page
 //
-let app = new PIXI.Application({width: windowWidth, height: windowHeight - 4});
+// let app = new PIXI.Application({width: windowWidth, height: windowHeight - 4});
+let app = new PIXI.Application();
+app.init()
 globalThis.__PIXI_APP__ = app;
 // document.body.appendChild(app.view);
 document.getElementById('canvas').appendChild(app.view);
