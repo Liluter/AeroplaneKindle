@@ -20,7 +20,7 @@ app.init({width: windowWidth, height: windowHeight - 4})
 
 globalThis.__PIXI_APP__ = app;
 // document.body.appendChild(app.view);
-document.getElementById('canvas').appendChild(app.view);
+document.getElementById('canvas').appendChild(app.canvas);
 app.resizeTo = document.getElementById('canvas');
 
 // Asset loading from spritesheet
@@ -70,8 +70,8 @@ window.addEventListener('resize', () => {
   windowWidth = window.innerWidth;
   windowHeight = windowWidth * 0.70836591;
   
-  app.view.width = windowWidth;
-  app.view.height = windowHeight - 4 ;
+  app.canvas.width = windowWidth;
+  app.canvas.height = windowHeight - 4 ;
   
   background.width = windowWidth;
   background.height = windowHeight;
