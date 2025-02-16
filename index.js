@@ -1,94 +1,94 @@
-let Xposition = 0;
-let Yposition = 0;
+import { Application, Sprite, Graphics, Container } from 'pixi.js';
+import * as PIXI from 'pixi.js'; // Import everything if needed
+
+// Constants for aspect ratio and mask size
+const ASPECT_RATIO = 0.70836591;
+const MASK_RADIUS = 125;
+const MASK_OFFSET = 100;
+
+// Initialize mouse position
+let mouseX = 0;
+let mouseY = 0;
+
+// Event listener for mouse movement
+document.addEventListener('pointermove', (e) => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+});
+
+// Asynchronous IIFE to handle asset loading and initialization
+(async () => {
+  // Create PixiJS application
+  const app = new Application({ resizeTo: window }); // resizeTo: window handles resizing automatically
+  document.getElementById('canvas').appendChild(app.canvas);
+
+  // Load spritesheet
+  try {
+    const sheet = await PIXI.Assets.load("assets/Scaledspritesheetdata.json");
+
+    // Create sprites
+    const background = new Sprite(sheet.textures["aircraft-kindle-000"]);
+    const xRay = new Sprite(sheet.textures["aircraft-kindle-Xray"]);
+    const scope = new Sprite(sheet.textures["ClassicScope"]);
+
+    // Set initial sizes (important for correct initial display)
+    resizeSprites(background, xRay);  // Helper function (see below)
+
+    // Add background to the stage
+    app.stage.addChild(background);
+
+    // Create mask
+    const mask = new Graphics();
+    mask.beginFill();
+    mask.drawCircle(MASK_RADIUS, MASK_RADIUS, MASK_RADIUS); // Circle at 0,0 within the Graphics
+    mask.endFill();
+
+    // Create mask container and add X-ray and mask to it
+    const maskContainer = new Container();
+    maskContainer.mask = mask;
+    maskContainer.addChild(mask);  // Mask needs to be a child of the container
+    maskContainer.addChild(xRay);
+
+    // Add mask container and scope to the stage (scope on top)
+    app.stage.addChild(maskContainer);
+    app.stage.addChild(scope);
+
+    // Center scope and mask initially
+    centerScopeAndMask(scope, mask); // Helper function (see below)
+
+    // Resize event listener
+    window.addEventListener('resize', () => {
+      resizeSprites(background, xRay);
+      centerScopeAndMask(scope, mask);
+    });
+
+    // Ticker for mouse tracking
+    app.ticker.add(() => {
+      mask.position.set(mouseX - MASK_OFFSET, mouseY - MASK_OFFSET);
+      scope.position.set(mouseX - MASK_OFFSET, mouseY - MASK_OFFSET);
+    });
+
+  } catch (error) {
+    console.error("Error loading assets:", error);
+    // Handle error, e.g., display a message to the user
+  }
+})();
 
 
-
-document.addEventListener('pointermove', (e)=> {
-  Xposition= e.clientX;
-  Yposition= e.clientY;
-})
-
-let windowWidth = window.innerWidth;
-let windowHeight = windowWidth * 0.70836591; // preserve aspect ratio of textures
-
-// Create the application helper and add its render target to the page
-//
-// let app = new PIXI.Application({width: windowWidth, height: windowHeight - 4});
-let app = new PIXI.Application();
-
-app.init({width: windowWidth, height: windowHeight - 4})
-
-globalThis.__PIXI_APP__ = app;
-// document.body.appendChild(app.view);
-document.getElementById('canvas').appendChild(app.canvas);
-app.resizeTo = document.getElementById('canvas');
-
-// Asset loading from spritesheet
-const sheet = await PIXI.Assets.load("assets/Scaledspritesheetdata.json");
-
-// Create background Sprite from sheet loaded line above
-let background = new PIXI.Sprite(sheet.textures["aircraft-kindle-000"]);
-background.width = windowWidth; // seting actual window size 
-background.height = windowHeight; // seting actual window size 
-
-//Create Xray overlay Sprite
-let xRay = new PIXI.Sprite(sheet.textures["aircraft-kindle-Xray"]);
-xRay.width = windowWidth; // seting actual window size 
-xRay.height = windowHeight; // seting actual window size 
-
-//Create Scope  Sprite
-let scope = new PIXI.Sprite(sheet.textures["ClassicScope"]);
-
-//Add background area to show
-app.stage.addChild(background);
-
-// Create a mask object to define our mask
-let mask = new PIXI.Graphics();
-// Add the mask geometry and empty fill
-mask.beginFill();
-mask.drawCircle(125,125,125);
-mask.endFill();
-
-// Add container that will hold our masked content
-let maskContainer = new PIXI.Container();
-
-// Add container to show
-app.stage.addChild(maskContainer);
-// Set the mask to use our graphics object from above
-maskContainer.mask = mask;
-// Add the mask as a child, so that the mask is positioned relative to its parent
-maskContainer.addChild(mask);
-
-// Add the Xray layer as a child, so that is positioned relative to its parent
-maskContainer.addChild(xRay);
-
-// Add scope layer here to show above mask
-app.stage.addChild(scope);
-
-// Che
-window.addEventListener('resize', () => {
-  windowWidth = window.innerWidth;
-  windowHeight = windowWidth * 0.70836591;
-  
-  app.canvas.width = windowWidth;
-  app.canvas.height = windowHeight - 4 ;
-  
+// Helper function to resize sprites based on window dimensions
+function resizeSprites(background, xRay) {
+  const windowWidth = window.innerWidth;
+  const windowHeight = windowWidth * ASPECT_RATIO;
   background.width = windowWidth;
   background.height = windowHeight;
   xRay.width = windowWidth;
   xRay.height = windowHeight;
-  maskContainer.width = windowWidth;
-  maskContainer.height = windowHeight;
-  
-  app.resize()
-})
+}
 
-// Add a ticker callback to scroll the text up and down
-let elapsed = 0.0;
-app.ticker.add((delta) => {
-  elapsed += delta;
-  
-  mask.position.set(Xposition - 100,Yposition - 100 )
-  scope.position.set(Xposition - 100,Yposition - 100 )
-});
-
+// Helper function to center scope and mask
+function centerScopeAndMask(scope, mask) {
+  const windowWidth = window.innerWidth;
+  const windowHeight = windowWidth * ASPECT_RATIO;
+  scope.position.set(windowWidth / 2 - MASK_OFFSET, windowHeight / 2 - MASK_OFFSET);
+  mask.position.set(windowWidth / 2 - MASK_OFFSET, windowHeight / 2 - MASK_OFFSET);
+}
