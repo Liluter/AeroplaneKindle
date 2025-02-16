@@ -1,4 +1,4 @@
-import { Application, Sprite, Graphics, Container } from 'pixi.js';
+import { Application, Sprite, Graphics, Container } from './pixi.js';
 import * as PIXI from 'pixi.js'; // Import everything if needed
 
 // Constants for aspect ratio and mask size
